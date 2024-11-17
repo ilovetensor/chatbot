@@ -18,16 +18,12 @@ with st.sidebar:
     if st.button('Clear History'):
         st.session_state.messages = []
 
-if os.environ.get('PASSWORD_KEY', '') != '':
-    if passwd == os.environ.get('PASSWORD_KEY_h'):
-        st.write(pd.read_csv('history.csv'))
-    if passwd != os.environ.get('PASSWORD_KEY'):
-        st.error("User not allowed")
-        st.stop()
-else:
-    st.error("set pwd key")
-    st.stop()
+if passwd == st.secrets['PASSWORD_KEY_h']:
+    st.write(pd.read_csv('history.csv'))
 
+if passwd != st.secrets['PASSWORD_KEY']:
+    st.error("User not allowed")
+    st.stop()
 
 # Load chat history
 if 'messages' not in st.session_state:
@@ -42,7 +38,7 @@ with cols[1]:
     if r:
         st.session_state.messages = []
 
-client = OpenAI()
+client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-4o"
