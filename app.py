@@ -19,7 +19,8 @@ with st.sidebar:
         st.session_state.messages = []
 
 if passwd == st.secrets['PASSWORD_KEY_h']:
-    st.write(pd.read_csv('history.csv'))
+    with open("history.csv", "r") as f:
+        st.write(f.read())
 
 if passwd != st.secrets['PASSWORD_KEY']:
     st.error("User not allowed")
