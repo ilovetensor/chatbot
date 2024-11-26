@@ -50,10 +50,10 @@ for message in st.session_state.messages:
 # File uploading feature
 uploaded_file = st.file_uploader("Upload a file", type=["txt", "pdf", "csv", "json"])
 if uploaded_file:
-    # Display file name
+    
     st.write(f"Uploaded file: {uploaded_file.name}")
 
-    # Process file (example: read and display content)
+   
     if uploaded_file.name.endswith(".txt"):
         content = uploaded_file.read().decode("utf-8")
         st.text_area("File Content", content, height=300)
@@ -71,9 +71,8 @@ if uploaded_file:
             pdf_reader = PyPDF2.PdfReader(uploaded_file)
             extracted_text = ""
             for page in pdf_reader.pages:
-                extracted_text += page.extract_text() or ""  # Handle pages with no text
+                extracted_text += page.extract_text() or ""  
             st.text_area("PDF Content", extracted_text, height=300)
-            # Save extracted text for later use
             st.session_state["pdf_content"] = extracted_text
 
 
